@@ -36,7 +36,7 @@ class Program
             Console.WriteLine("Slot Machine Grid");
             for(int i = 0; i < 3; i++)
             {
-                for(int j = 0; i < 3; j++)
+                for(int j = 0; j < 3; j++)
                 {
                     Console.Write(grid[i, j]+ " ");
                 }
