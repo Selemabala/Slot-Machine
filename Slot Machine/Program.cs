@@ -24,21 +24,21 @@ class Program
             money = money - wager; //(I could also use money-=wager)
 
             //filling the grid with random numbers
-            for (int i = 0; i < 3;i++)
+            for (int outerloop = 0; outerloop < 3;outerloop++)
             {
-                for(int j = 0; j < 3; j++)
+                for(int innerloop = 0; innerloop < 3; innerloop++)
                 {
                     //getting random numbers between 1,4
-                    grid[i, j] = random.Next(1, 4);
+                    grid[outerloop, innerloop] = random.Next(1, 4);
                 }
             }
             //Outputting the grid
             Console.WriteLine("Slot Machine Grid");
-            for(int i = 0; i < 3; i++)
+            for(int outerloop = 0; outerloop < 3; outerloop++)
             {
-                for(int j = 0; j < 3; j++)
+                for(int innerloop = 0; innerloop < 3; innerloop++)
                 {
-                    Console.Write(grid[i, j]+ " ");
+                    Console.Write(grid[outerloop, innerloop]+ " ");
                 }
                 Console.WriteLine();
             }
@@ -55,6 +55,12 @@ class Program
             }
             //informing the total amount of money
             Console.WriteLine($"Currently, your total money is {money}");
+
+            //quitting the game if the money is o
+            if (money <= 0)
+            {
+                break;
+            }
 
             //asking if the user wants to play more
             Console.WriteLine("Do you want to play again?)");
