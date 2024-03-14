@@ -87,7 +87,7 @@ class Program
             string userchoice = Console.ReadLine();
             if (userchoice.ToLower() == CONTINUEPLAY)
             {
-                continue;
+                Console.Write("Alright, lets keep going");
             }
             //exiting the loop game if the answer is not yes
             else
