@@ -5,6 +5,15 @@ class Program
     static void Main(string[] args)
     {
         const string CONTINUEPLAY = "yes";
+        const int NOMONEY = 0;
+        const int GRIDROWS = 3;
+        const int GRIDCOLUMNS =3;
+        const int FIRSTCOLUMN = 0;
+        const int SECONDCOLUMN = 1;
+        const int THIRDCOLOUMN = 2;
+        const int FIRSTROW = 0;
+        const int SECONDROW = 1;
+        const int THIRDROW = 2;
 
         Console.WriteLine("Hello, Welcome let us play the game Slot Machine!");
         Console.WriteLine("You will be rewarded the same amount of the money that you will wage");
@@ -13,7 +22,7 @@ class Program
       int money = 10;
         Random random = new Random();
         // 3 x 3 grid for the slot machine
-        int[,] grid = new int[3,3];
+        int[,] grid = new int[GRIDCOLUMNS,GRIDROWS];
         // creating an infinite loop to only to be stoped after the user types exit
         while (true)
         {
@@ -28,26 +37,32 @@ class Program
             money = money - wager; //(I could also use money-=wager)
 
             //filling the grid with random numbers
-            for (int outerloop = 0; outerloop < 3;outerloop++)
+            int loopStart = 0;
+            int loopEnd = 3;
+            int innerLoopStart = 0;
+            int innerLoopEnd = 3;
+            int gridStart = 1;
+            int gridpEnd = 3;
+            for (int outerloop = loopStart; outerloop < loopEnd;outerloop++)
             {
-                for(int innerloop = 0; innerloop < 3; innerloop++)
+                for(int innerloop = innerLoopStart; innerloop < innerLoopEnd; innerloop++)
                 {
                     //getting random numbers between 1,4
-                    grid[outerloop, innerloop] = random.Next(1, 4);
+                    grid[outerloop, innerloop] = random.Next(gridStart, gridpEnd);
                 }
             }
             //Outputting the grid
             Console.WriteLine("Slot Machine Grid");
-            for(int outerloop = 0; outerloop < 3; outerloop++)
+            for(int outerloop = loopStart; outerloop < loopEnd; outerloop++)
             {
-                for(int innerloop = 0; innerloop < 3; innerloop++)
+                for(int innerloop =innerLoopStart ; innerloop < innerLoopEnd; innerloop++)
                 {
                     Console.Write(grid[outerloop, innerloop]+ " ");
                 }
                 Console.WriteLine();
             }
             //checking if the middle row is all the same
-            if (grid[1, 0] == grid[1,1] && grid[1, 1] == grid[1,2])
+            if (grid[SECONDCOLUMN, FIRSTROW] == grid[SECONDCOLUMN,SECONDROW] && grid[SECONDCOLUMN, SECONDROW] == grid[SECONDCOLUMN,THIRDROW])
             {
                 Console.WriteLine("Conglatualations, you won");
                 //adding wager amount to the total money
@@ -61,7 +76,7 @@ class Program
             Console.WriteLine($"Currently, your total money is {money}");
 
             //quitting the game if the money is o
-            if (money <= 0)
+            if (money <= NOMONEY)
             {
                 break;
             }
