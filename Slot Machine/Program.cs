@@ -4,16 +4,20 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello, Welcome to play this Slot Machine game!");
+        const string CONTINUEPLAY = "yes";
+
+        Console.WriteLine("Hello, Welcome let us play the game Slot Machine!");
+        Console.WriteLine("You will be rewarded the same amount of the money that you will wage");
+        Console.WriteLine("The game will automatically end once you are left with no money");
         //The starting money
-        int money = 10;
+      int money = 10;
         Random random = new Random();
         // 3 x 3 grid for the slot machine
         int[,] grid = new int[3,3];
         // creating an infinite loop to only to be stoped after the user types exit
-        for (;;)
+        while (true)
         {
-            Console.WriteLine($"\nYou have {money} as the amount of money, how much would you like to wager?");
+            Console.WriteLine($"\nYou have {money} as the amount of money) how much would you like to wager?");
             int wager = Convert.ToInt32(Console.ReadLine());
             if (wager > money)
             {
@@ -63,11 +67,10 @@ class Program
             }
 
             //asking if the user wants to play more
-            Console.WriteLine("Do you want to play again?)");
+            Console.WriteLine("Do you want to play again?");
             Console.WriteLine("Please type yes if you want to play and no if you dont want to play");
-            string continueAnswer = "yes";
             string userchoice = Console.ReadLine();
-            if (userchoice.ToLower() == continueAnswer)
+            if (userchoice.ToLower() == CONTINUEPLAY)
             {
                 continue;
             }
