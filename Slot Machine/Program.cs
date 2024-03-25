@@ -8,13 +8,11 @@ class Program
         const int NO_MONEY = 0;
         const int GRIDROWS = 3;
         const int GRIDCOLUMNS = 3;
-        const int THIRDROW = 2;
         const int LOOP_START = 0;
         const int LOOPEND = 3;
         const int GRIDSTART = 1;
         const int GRIDEND = 4;
-        const int WIN_MATCHES = 2;
-        const int ONE_WIN = 1;
+        const int SECOND_VALUE = 1;
 
         Console.WriteLine("Hello, Welcome let us play the game Slot Machine!");
         Console.WriteLine("You will be rewarded the same amount of the money that you will wage");
@@ -42,118 +40,71 @@ class Program
 
             for (int outerloop = LOOP_START; outerloop < LOOPEND; outerloop++)
             {
-                for (int innerloop = LOOP_START; innerloop < LOOPEND; innerloop++)
+                for (int insideloop = LOOP_START; insideloop < LOOPEND; insideloop++)
                 {
                     //getting random numbers between 1,4
-                    grid[outerloop, innerloop] = random.Next(GRIDSTART, GRIDEND);
+                    grid[outerloop, insideloop] = random.Next(GRIDSTART, GRIDEND);
                 }
             }
             //Outputting the grid
             Console.WriteLine("Slot Machine Grid");
             for (int outerloop = LOOP_START; outerloop < LOOPEND; outerloop++)
             {
-                for (int innerloop = LOOP_START; innerloop < LOOPEND; innerloop++)
+                for (int inside = LOOP_START; inside < LOOPEND; inside++)
                 {
-                    Console.Write(grid[outerloop, innerloop] + " ");
+                    Console.Write(grid[outerloop, inside] + " ");
                 }
                 Console.WriteLine();
             }
             //checking if the horinzontal and Vertical are all the same
+            int gridRowLenghth = grid.GetLength(0);
+            int gridColumnLenghth = grid.GetLength(1);
             int firstValue = 0;
             bool match = false;
-            int secondvalue = 1;
-            int win = 0;
-            int won = 0;
-            int horizontalWin = 0;
-            int verticalWon = 0;
-            for (int outerloop = LOOP_START; outerloop < LOOPEND; outerloop++)
+            int innerloop = 0;
+            for (int outerloop = firstValue; outerloop < gridRowLenghth; outerloop++)
             {
                 int horizontalValue = grid[outerloop, firstValue];
                 int verticalValue = grid[firstValue, outerloop];
 
-                for (int innerloop = secondvalue; innerloop < LOOPEND; innerloop++)
+                for (innerloop = SECOND_VALUE; innerloop < gridColumnLenghth; innerloop++)
                 {
-                    if (grid[outerloop, innerloop] == horizontalValue)
+                    if (horizontalValue == grid[outerloop, innerloop] && horizontalValue == grid[outerloop, innerloop++])
+
                     {
-                        win = ONE_WIN;
+                        {
+                            Console.WriteLine($"Conglatulation you won by matching {horizontalValue} at row {outerloop++}");
+                            match = true;
+                            //adding wager amount to the total money
+                            money = money + wager;
+                        } 
+
+                        if (!match)
+                        {
+                            Console.WriteLine($"Sorry, you didnt win anything in row  {outerloop}");
+                        }
                     }
 
-                    if (grid[innerloop, outerloop] == verticalValue)
+                    if (verticalValue == grid[innerloop, outerloop] && verticalValue == grid[innerloop, outerloop++]);
                     {
-                        won = ONE_WIN; 
-                    }
-                    horizontalWin = horizontalWin+ win;
-                    verticalWon = verticalWon + won;
-
-                    if (horizontalWin == WIN_MATCHES)
-                    {
-                        match = true;
-                        Console.WriteLine($"Conglatulation you won by matching {horizontalValue} at row {outerloop++}");
-                        //adding wager amount to the total money
-                        money = money + wager;
-                    }
-
-                    if (verticalWon == WIN_MATCHES)
-                    {
-                        match = true;
-                        Console.WriteLine($"Conglatulation you won by matching {verticalValue} at colomn {outerloop++}");
-                        //adding wager amount to the total money
-                        money = money + wager;
+                        {
+                            Console.WriteLine($"Conglatulation you won by matching {verticalValue} at colomn {outerloop++}");
+                            match = true;
+                            //adding wager amount to the total money
+                            money = money + wager;
+                        } 
+                        if (!match)
+                        {
+                            Console.WriteLine($"Sorry, you didnt win anything in colomn {innerloop}");
+                        }
                     }
                 }
 
-            }
-
-
-            int diagnalLeftRight = grid[LOOP_START, LOOP_START];
-            int firstdiagnalMatch = 0;
-            int diagnalRightLeft = grid[LOOP_START, THIRDROW];
-            int seconddiagnalMatch = 0;
-            int thirddiagnalMatch = 0;
-            for (int outerloop = secondvalue; outerloop < THIRDROW; outerloop++)
-            {
-                if (grid[secondvalue, secondvalue] == diagnalLeftRight)
-                {
-                    firstdiagnalMatch=ONE_WIN;
-                }
-
-                if (grid[THIRDROW - secondvalue, THIRDROW] == diagnalRightLeft)
-                {
-                    seconddiagnalMatch = ONE_WIN; 
-                }
-
-                if (grid[THIRDROW, LOOP_START] == diagnalRightLeft)
-                {
-                    thirddiagnalMatch = ONE_WIN;
-                }
-                int completeMatchLeftRight = firstdiagnalMatch + seconddiagnalMatch;
-                int completeMatchRightLeft = firstdiagnalMatch + thirddiagnalMatch;
-
-
-                if (completeMatchLeftRight == WIN_MATCHES)
-                {
-                    match = true;
-                    Console.WriteLine($"Conglatulations yu won in the left right diagnal by having same numbers of {diagnalLeftRight}");
-                    //adding wager amount to the total money
-                    money = money + wager;
-                }
-
-                if (completeMatchRightLeft == WIN_MATCHES)
-                {
-                    match = true;
-                    Console.WriteLine($"Conglatulations yu won in the right left diagnal by having same numbers of {diagnalRightLeft}");
-                    //adding wager amount to the total money
-                    money = money + wager;
-                }
-            }
-
-            if (!match)
-            {
-                Console.WriteLine("Sorry, you didnt win anything");
             }
 
             //informing the total amount of money
             Console.WriteLine($"Currently, your total money is {money}");
+
 
             //quitting the game if the money is o
             if (money <= NO_MONEY)
@@ -174,9 +125,28 @@ class Program
             {
                 break;
             }
-
+            Console.WriteLine("Thank you so much for playing");
         }
-        Console.WriteLine("Thank you so much for playing");
+
+        
     }
+
+               /* if (completeMatchLeftRight == WIN_MATCHES)
+                {
+                    match = true;
+                    Console.WriteLine($"Conglatulations yu won in the left right diagnal by having same numbers of {diagnalLeftRight}");
+                    //adding wager amount to the total money
+                    money = money + wager;
+                }
+
+                if (completeMatchRightLeft == WIN_MATCHES)
+                {
+                    match = true;
+                    Console.WriteLine($"Conglatulations yu won in the right left diagnal by having same numbers of {diagnalRightLeft}");
+                    //adding wager amount to the total money
+                    money = money + wager;
+               */ 
+
 }
+
 
