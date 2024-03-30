@@ -102,21 +102,21 @@ class Program
                     }
                 }
 
-                if (holizontalMatch == WIN && choice== FIRST_ROW && holizontalMatch == grid[ONE,ONE])
+                if (holizontalMatch == WIN && choice == FIRST_ROW && holizontalMatch == grid[ONE, ONE])
                 {
                     Console.WriteLine($"Conglatulation you won by matching {horizontalValue} at the first row");
                     //adding wager amount to the total money
                     money = money + wager;
                 }
 
-                if (holizontalMatch == WIN && choice == SECOND_ROW  && horizontalValue == grid[TWO, ONE])
+                if (holizontalMatch == WIN && choice == SECOND_ROW && horizontalValue == grid[TWO, ONE])
                 {
                     Console.WriteLine($"Conglatulation you won by matching {horizontalValue} at the second row");
                     //adding wager amount to the total money
                     money = money + wager;
                 }
 
-                if (holizontalMatch == WIN && choice == THIRD_ROW && horizontalValue == grid[THREE ,ONE])
+                if (holizontalMatch == WIN && choice == THIRD_ROW && horizontalValue == grid[THREE, ONE])
                 {
                     Console.WriteLine($"Conglatulation you won by matching {horizontalValue} at the third row");
                     //adding wager amount to the total money
@@ -136,7 +136,7 @@ class Program
                 if (holizontalMatch != WIN && choice == THIRD_ROW && horizontalValue == grid[THREE, ONE])
                 {
                     Console.WriteLine("Sorry you did not win at the third row");
-               
+
                 }
 
                 if (verticalMatch == WIN && choice == FIRST_COLUMN && verticalValue == grid[ONE, ONE])
@@ -179,7 +179,7 @@ class Program
             }
 
             int diagnolValues = grid[FIRSTVALUE, FIRSTVALUE];
-            if (diagnolValues == grid[SECOND_VALUE, SECOND_VALUE] && diagnolValues == grid[gridRowLenghth - GRIDSTART, gridColumnLenghth - GRIDSTART] && choice== TOP_LEFT_RIGHT)
+            if (diagnolValues == grid[SECOND_VALUE, SECOND_VALUE] && diagnolValues == grid[gridRowLenghth - GRIDSTART, gridColumnLenghth - GRIDSTART] && choice == TOP_LEFT_RIGHT)
             {
                 Console.WriteLine($"Conglatulation you won by matching {diagnolValues} from top left to bottom right");
                 money += wager;
@@ -192,7 +192,7 @@ class Program
 
 
             int secondDiagnalValues = grid[FIRSTVALUE, gridRowLenghth - GRIDSTART];
-            if (secondDiagnalValues == grid[SECOND_VALUE, SECOND_VALUE] && secondDiagnalValues == grid[gridRowLenghth - GRIDSTART, FIRSTVALUE] && choice== TOP_RIGHT_LEFT)
+            if (secondDiagnalValues == grid[SECOND_VALUE, SECOND_VALUE] && secondDiagnalValues == grid[gridRowLenghth - GRIDSTART, FIRSTVALUE] && choice == TOP_RIGHT_LEFT)
             {
                 Console.WriteLine($"Conglatulation you won by matching {secondDiagnalValues} from top right to bottom left");
                 money += wager;
