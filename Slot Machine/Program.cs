@@ -88,6 +88,8 @@ class Program
                 int verticalMatch = 0;
                 int horizontalValue = grid[outerloop, FIRSTVALUE];
                 int verticalValue = grid[FIRSTVALUE, outerloop];
+                int diagnolValues = grid[FIRSTVALUE, FIRSTVALUE];
+                int secondDiagnalValues = grid[FIRSTVALUE, gridRowLenghth - GRIDSTART];
                 for (int innerloop = SECOND_VALUE; innerloop < gridColumnLenghth; innerloop++)
                 {
                     if (horizontalValue == grid[outerloop, innerloop])
@@ -99,6 +101,16 @@ class Program
                     if (verticalValue == grid[innerloop, outerloop])
                     {
                         verticalMatch = verticalMatch + PARTIAL_WIN;
+                    }
+
+                    if (diagnolValues == grid[SECOND_VALUE, SECOND_VALUE] && diagnolValues == grid[gridRowLenghth - GRIDSTART, gridColumnLenghth - GRIDSTART])
+                    {
+                        diagnolValues = WIN;
+                    }
+
+                    if (secondDiagnalValues == grid[SECOND_VALUE, SECOND_VALUE] && secondDiagnalValues == grid[gridRowLenghth - GRIDSTART, FIRSTVALUE])
+                    {
+                        secondDiagnalValues = WIN;
                     }
                 }
 
@@ -123,17 +135,17 @@ class Program
                     money = money + wager;
                 }
 
-                if (holizontalMatch != WIN && choice == FIRST_ROW && horizontalValue == grid[ONE, ONE])
+                if (holizontalMatch != WIN && holizontalMatch == PARTIAL_WIN && choice == FIRST_ROW && horizontalValue == grid[ONE, ONE])
                 {
                     Console.WriteLine("Sorry you did not win at the first row");
                 }
 
-                if (holizontalMatch != WIN && choice == SECOND_ROW && horizontalValue == grid[TWO, ONE])
+                if (holizontalMatch != WIN && holizontalMatch == PARTIAL_WIN && choice == SECOND_ROW && horizontalValue == grid[TWO, ONE])
                 {
                     Console.WriteLine("Sorry you did not win at the second row");
                 }
 
-                if (holizontalMatch != WIN && choice == THIRD_ROW && horizontalValue == grid[THREE, ONE])
+                if (holizontalMatch != WIN && holizontalMatch == PARTIAL_WIN && choice == THIRD_ROW && horizontalValue == grid[THREE, ONE])
                 {
                     Console.WriteLine("Sorry you did not win at the third row");
 
@@ -161,47 +173,48 @@ class Program
                 }
 
 
-                if (verticalMatch != WIN && choice == FIRST_COLUMN && verticalValue == grid[ONE, ONE])
+                if (verticalMatch != WIN && verticalMatch == PARTIAL_WIN && choice == FIRST_COLUMN && verticalValue == grid[ONE, ONE])
                 {
                     Console.WriteLine("Sorry you did not win at the first column");
                 }
 
-                if (verticalMatch != WIN && choice == SECOND_COLUMN && verticalValue == grid[ONE, TWO])
+                if (verticalMatch != WIN && verticalMatch == PARTIAL_WIN && choice == SECOND_COLUMN && verticalValue == grid[ONE, TWO])
                 {
                     Console.WriteLine("Sorry you did not win at the second column");
                 }
 
-                if (verticalMatch != WIN && choice == THIRD_COLUMN && verticalValue == grid[ONE, THREE])
+                if (verticalMatch != WIN && verticalMatch == PARTIAL_WIN && choice == THIRD_COLUMN && verticalValue == grid[ONE, THREE])
                 {
                     Console.WriteLine("Sorry you did not win at the third column");
 
                 }
+
+                
+                if (diagnolValues==WIN && choice == TOP_LEFT_RIGHT)
+                {
+                    Console.WriteLine($"Conglatulation you won by matching {diagnolValues} from top left to bottom right");
+                    money += wager;
+                }
+
+                if (diagnolValues != WIN &&  choice == TOP_LEFT_RIGHT && choice == TOP_LEFT_RIGHT)
+                {
+                    Console.WriteLine($"Sorry you did not win from top left to bottom right");
+                }
+
+                
+                if( secondDiagnalValues==WIN && choice == TOP_RIGHT_LEFT)
+                {
+                    Console.WriteLine($"Conglatulation you won by matching {secondDiagnalValues} from top right to bottom left");
+                    money += wager;
+                }
+
+                if (secondDiagnalValues != WIN && choice == TOP_RIGHT_LEFT)
+                {
+                    Console.WriteLine($"Sorry you did not win from top right to bottom left");
+                }
             }
 
-            int diagnolValues = grid[FIRSTVALUE, FIRSTVALUE];
-            if (diagnolValues == grid[SECOND_VALUE, SECOND_VALUE] && diagnolValues == grid[gridRowLenghth - GRIDSTART, gridColumnLenghth - GRIDSTART] && choice == TOP_LEFT_RIGHT)
-            {
-                Console.WriteLine($"Conglatulation you won by matching {diagnolValues} from top left to bottom right");
-                money += wager;
-            }
-
-            if (diagnolValues != grid[SECOND_VALUE, SECOND_VALUE] && diagnolValues != grid[gridRowLenghth - GRIDSTART, gridColumnLenghth - GRIDSTART] && choice == TOP_LEFT_RIGHT)
-            {
-                Console.WriteLine($"Sorry you did not win from top left to bottom right");
-            }
-
-
-            int secondDiagnalValues = grid[FIRSTVALUE, gridRowLenghth - GRIDSTART];
-            if (secondDiagnalValues == grid[SECOND_VALUE, SECOND_VALUE] && secondDiagnalValues == grid[gridRowLenghth - GRIDSTART, FIRSTVALUE] && choice == TOP_RIGHT_LEFT)
-            {
-                Console.WriteLine($"Conglatulation you won by matching {secondDiagnalValues} from top right to bottom left");
-                money += wager;
-            }
-
-            if (secondDiagnalValues != grid[FIRSTVALUE, gridRowLenghth - GRIDSTART] && secondDiagnalValues != grid[gridRowLenghth - GRIDSTART, gridColumnLenghth - GRIDSTART] && choice == TOP_RIGHT_LEFT)
-            {
-                Console.WriteLine($"Sorry you did not win from top right to bottom left");
-            }
+           
 
             //informing the total amount of money
             Console.WriteLine($"Currently, your total money is {money}");
