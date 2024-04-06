@@ -11,7 +11,7 @@ class Program
         const string CONTINUE_PLAY = "yes";
         const int NO_MONEY = 0;
         const int GRIDROWS = 3;
-        const int GRIDCOLUMNS = 3;
+        const int GRID_COLUMNS = 3;
         const int LOOP_START = 0;
         const int LOOPEND = 3;
         const int GRIDSTART = 1;
@@ -31,6 +31,12 @@ class Program
         const int ONE = 0;
         const int TWO = 1;
         const int THREE = 2;
+        const int HOLIZONTAL_CHOICES = 1;
+        const int VERTICAL_CHOICES = 3;
+        const int DIAGNAL_CHOICES = 1;
+        const int SECOND_DIAGNAL_CHOICES = 2;
+        const int DIAGNAL_WIN = 3;
+        const int SECOND_DIAGNAL_WIN = 4;
 
 
         Console.WriteLine("Hello, Welcome let us play the game Slot Machine!");
@@ -41,7 +47,7 @@ class Program
 
         Random random = new Random();
         // 3 x 3 grid for the slot machine
-        int[,] grid = new int[GRIDCOLUMNS, GRIDROWS];
+        int[,] grid = new int[GRID_COLUMNS, GRIDROWS];
         // creating an infinite loop to only to be stoped after the user types exit
         while (true)
         {
@@ -60,8 +66,8 @@ class Program
             money -= wager; //(I could also use money-=wager)
 
             //filling the grid with random numbers
-
-            for (int outerloop = LOOP_START; outerloop < LOOPEND; outerloop++)
+            int outerloop = 0;
+            for (outerloop = LOOP_START; outerloop < LOOPEND; outerloop++)
             {
                 for (int insideloop = LOOP_START; insideloop < LOOPEND; insideloop++)
                 {
@@ -71,7 +77,8 @@ class Program
             }
             //Outputting the grid
             Console.WriteLine("Slot Machine Grid");
-            for (int outerloop = LOOP_START; outerloop < LOOPEND; outerloop++)
+           
+            for (outerloop = LOOP_START; outerloop < LOOPEND; outerloop++)
             {
                 for (int inside = LOOP_START; inside < LOOPEND; inside++)
                 {
@@ -79,17 +86,16 @@ class Program
                 }
                 Console.WriteLine();
             }
-            //checking if the horinzontal and Vertical are all the same
+            //checking if the horinzontal are all the same
             int gridRowLenghth = grid.GetLength(0);
             int gridColumnLenghth = grid.GetLength(1);
-            for (int outerloop = FIRSTVALUE; outerloop < gridRowLenghth; outerloop++)
+            int holizontalMatch = 0;
+           
+            for (outerloop = FIRSTVALUE; outerloop < gridRowLenghth; outerloop++)
             {
-                int holizontalMatch = 0;
-                int verticalMatch = 0;
+              
                 int horizontalValue = grid[outerloop, FIRSTVALUE];
-                int verticalValue = grid[FIRSTVALUE, outerloop];
-                int diagnolValues = grid[FIRSTVALUE, FIRSTVALUE];
-                int secondDiagnalValues = grid[FIRSTVALUE, gridRowLenghth - GRIDSTART];
+               
                 for (int innerloop = SECOND_VALUE; innerloop < gridColumnLenghth; innerloop++)
                 {
                     if (horizontalValue == grid[outerloop, innerloop])
@@ -98,123 +104,107 @@ class Program
                         holizontalMatch = holizontalMatch + PARTIAL_WIN;
                     }
 
+                }
+                if (holizontalMatch==WIN && choice==outerloop+HOLIZONTAL_CHOICES)
+
+                {
+                    Console.WriteLine($"Conglatulation you won by matching {horizontalValue} at the {choice}");
+                    //adding wager amount to the total money
+                    money = money + wager;
+                }
+
+                 if (holizontalMatch != WIN && choice==outerloop+ HOLIZONTAL_CHOICES)
+                 {
+                        Console.WriteLine("Sorry you did not win");
+                 }
+            }
+
+
+
+            //checking if the Vertical are all the same
+            int verticalMatch = 0;
+            for (outerloop = FIRSTVALUE; outerloop < gridRowLenghth; outerloop++)
+            {
+               
+                int verticalValue = grid[FIRSTVALUE, outerloop];
+                for (int innerloop = SECOND_VALUE; innerloop < gridColumnLenghth; innerloop++)
+                {
                     if (verticalValue == grid[innerloop, outerloop])
                     {
                         verticalMatch = verticalMatch + PARTIAL_WIN;
                     }
 
-                    if (diagnolValues == grid[SECOND_VALUE, SECOND_VALUE] && diagnolValues == grid[gridRowLenghth - GRIDSTART, gridColumnLenghth - GRIDSTART])
-                    {
-                        diagnolValues = WIN;
-                    }
-
-                    if (secondDiagnalValues == grid[SECOND_VALUE, SECOND_VALUE] && secondDiagnalValues == grid[gridRowLenghth - GRIDSTART, FIRSTVALUE])
-                    {
-                        secondDiagnalValues = WIN;
-                    }
                 }
+                if (verticalMatch == WIN && choice == outerloop + VERTICAL_CHOICES)
 
-                if (holizontalMatch == WIN && choice == FIRST_ROW && holizontalMatch == grid[ONE, ONE])
                 {
-                    Console.WriteLine($"Conglatulation you won by matching {horizontalValue} at the first row");
+                    Console.WriteLine($"Conglatulation you won by matching {verticalValue} at the {choice}");
                     //adding wager amount to the total money
                     money = money + wager;
                 }
 
-                if (holizontalMatch == WIN && choice == SECOND_ROW && horizontalValue == grid[TWO, ONE])
+                if (verticalMatch != WIN && choice == outerloop + VERTICAL_CHOICES)
                 {
-                    Console.WriteLine($"Conglatulation you won by matching {horizontalValue} at the second row");
-                    //adding wager amount to the total money
-                    money = money + wager;
-                }
-
-                if (holizontalMatch == WIN && choice == THIRD_ROW && horizontalValue == grid[THREE, ONE])
-                {
-                    Console.WriteLine($"Conglatulation you won by matching {horizontalValue} at the third row");
-                    //adding wager amount to the total money
-                    money = money + wager;
-                }
-
-                if (holizontalMatch != WIN && holizontalMatch == PARTIAL_WIN && choice == FIRST_ROW && horizontalValue == grid[ONE, ONE])
-                {
-                    Console.WriteLine("Sorry you did not win at the first row");
-                }
-
-                if (holizontalMatch != WIN && holizontalMatch == PARTIAL_WIN && choice == SECOND_ROW && horizontalValue == grid[TWO, ONE])
-                {
-                    Console.WriteLine("Sorry you did not win at the second row");
-                }
-
-                if (holizontalMatch != WIN && holizontalMatch == PARTIAL_WIN && choice == THIRD_ROW && horizontalValue == grid[THREE, ONE])
-                {
-                    Console.WriteLine("Sorry you did not win at the third row");
-
-                }
-
-                if (verticalMatch == WIN && choice == FIRST_COLUMN && verticalValue == grid[ONE, ONE])
-                {
-                    Console.WriteLine($"Conglatulation you won by matching {verticalValue} at the first column");
-                    //adding wager amount to the total money
-                    money = money + wager;
-                }
-
-                if (verticalMatch == WIN && choice == SECOND_COLUMN && verticalValue == grid[ONE, TWO])
-                {
-                    Console.WriteLine($"Conglatulation you won by matching {verticalValue} at the second column");
-                    //adding wager amount to the total money
-                    money = money + wager;
-                }
-
-                if (verticalMatch == WIN && choice == THIRD_COLUMN && verticalValue == grid[ONE, THREE])
-                {
-                    Console.WriteLine($"Conglatulation you won by matching {verticalValue} at the third column");
-                    //adding wager amount to the total money
-                    money = money + wager;
-                }
-
-
-                if (verticalMatch != WIN && verticalMatch == PARTIAL_WIN && choice == FIRST_COLUMN && verticalValue == grid[ONE, ONE])
-                {
-                    Console.WriteLine("Sorry you did not win at the first column");
-                }
-
-                if (verticalMatch != WIN && verticalMatch == PARTIAL_WIN && choice == SECOND_COLUMN && verticalValue == grid[ONE, TWO])
-                {
-                    Console.WriteLine("Sorry you did not win at the second column");
-                }
-
-                if (verticalMatch != WIN && verticalMatch == PARTIAL_WIN && choice == THIRD_COLUMN && verticalValue == grid[ONE, THREE])
-                {
-                    Console.WriteLine("Sorry you did not win at the third column");
-
-                }
-
-                
-                if (diagnolValues==WIN && choice == TOP_LEFT_RIGHT)
-                {
-                    Console.WriteLine($"Conglatulation you won by matching {diagnolValues} from top left to bottom right");
-                    money += wager;
-                }
-
-                if (diagnolValues != WIN &&  choice == TOP_LEFT_RIGHT && choice == TOP_LEFT_RIGHT)
-                {
-                    Console.WriteLine($"Sorry you did not win from top left to bottom right");
-                }
-
-                
-                if( secondDiagnalValues==WIN && choice == TOP_RIGHT_LEFT)
-                {
-                    Console.WriteLine($"Conglatulation you won by matching {secondDiagnalValues} from top right to bottom left");
-                    money += wager;
-                }
-
-                if (secondDiagnalValues != WIN && choice == TOP_RIGHT_LEFT)
-                {
-                    Console.WriteLine($"Sorry you did not win from top right to bottom left");
+                    Console.WriteLine("Sorry you did not win at");
                 }
             }
 
-           
+
+
+
+            //checking if the diagnal are all the same
+            int diagnolValues = grid[FIRSTVALUE, FIRSTVALUE];
+            int diagnolaMatch = 0;
+            int secondDiagnalMatch = 0;
+            int actualGridRowLenght = gridRowLenghth - 1;
+            int secondCheck = 1;
+            int secondDiagnalValues = grid[FIRSTVALUE, gridRowLenghth - GRIDSTART];
+            for (outerloop = FIRSTVALUE; outerloop < gridRowLenghth; outerloop++)
+            {
+                for (int innerloop = SECOND_VALUE; innerloop < gridColumnLenghth; innerloop++)
+                {
+
+                }
+                if (diagnolValues == grid[secondCheck, secondCheck]);
+                {
+                     diagnolaMatch = diagnolaMatch + PARTIAL_WIN;
+                }
+
+                if (secondDiagnalValues == grid[outerloop, actualGridRowLenght - outerloop]);
+                {
+                    secondDiagnalMatch = secondDiagnalMatch + PARTIAL_WIN;
+                }
+
+            }
+
+            if (diagnolaMatch == WIN && choice == TOP_LEFT_RIGHT)
+
+            {
+                Console.WriteLine($"Conglatulation you won by matching {diagnolValues}");
+                //adding wager amount to the total money
+                money = money + wager;
+            }
+
+            if (diagnolaMatch != WIN  && choice == TOP_LEFT_RIGHT)
+            {
+                Console.WriteLine("Sorry you did not win");
+            }
+
+
+            if (secondDiagnalMatch == WIN && choice == TOP_RIGHT_LEFT)
+
+            {
+                Console.WriteLine($"Conglatulation you won by matching {secondDiagnalValues}");
+                //adding wager amount to the total money
+                money = money + wager;
+            }
+
+            if (secondDiagnalMatch != WIN && choice ==  TOP_RIGHT_LEFT)
+            {
+                Console.WriteLine("Sorry you did not win");
+            }
+
+
 
             //informing the total amount of money
             Console.WriteLine($"Currently, your total money is {money}");
