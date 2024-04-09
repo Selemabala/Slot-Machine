@@ -18,13 +18,12 @@ class Program
         const int GRID_END = 4;
         const int FIRST_GRID_VALUE = 0;
         const int SECOND_GRID_VALUE = 1;
-        const int WIN = 3;
         const int MIDDLE_LINE = 1;
         const int ALL_HORIZONTALS = 2;
         const int ALL_VERTICALS = 3;
         const int BOTH_DIAGNALS = 4;
         const int EVERYTHING_ON_THE_GRID = 5;
-        bool isWin = false;
+
 
 
 
@@ -75,17 +74,17 @@ class Program
                 }
                 Console.WriteLine();
             }
-            //checking if the middle line and horinzontal are all the same
-            int firstGridElement = grid.GetLength(0);
-            int gridColumnLenghth = grid.GetLength(1);
-
+            //checking if the middle line values are all the same
+            int gridRowLength = grid.GetLength(0);
+            int gridColumnLength = grid.GetLength(1);
+            bool isWin = false;
             int holizontalLineWin = 0;
-            for (outerloop = FIRST_GRID_VALUE; outerloop < firstGridElement; outerloop++)
+            for (outerloop = FIRST_GRID_VALUE; outerloop < gridRowLength; outerloop++)
             {
                 int holizontalMatch = 0;
                 int horizontalValue = grid[outerloop, FIRST_GRID_VALUE];
 
-                for (int innerloop = SECOND_GRID_VALUE; innerloop < gridColumnLenghth; innerloop++)
+                for (int innerloop = FIRST_GRID_VALUE; innerloop < gridColumnLength; innerloop++)
                 {
                     if (horizontalValue == grid[outerloop, innerloop])
 
@@ -95,11 +94,10 @@ class Program
 
                 }
 
-                if (holizontalMatch == WIN)
+                if (holizontalMatch == gridRowLength)
 
                 {
                     isWin = true;
-                    holizontalLineWin++;
                 }
 
             }
@@ -118,9 +116,38 @@ class Program
                 }
             }
 
+
+
+            //checking if the  horinzontal are all the same
+            bool rowWin = true;
+
+            for (outerloop = FIRST_GRID_VALUE; outerloop < gridRowLength; outerloop++)
+            {
+                int horizontalValue = grid[outerloop, FIRST_GRID_VALUE];
+
+                for (int innerloop = FIRST_GRID_VALUE; innerloop < gridColumnLength; innerloop++)
+                {
+                    if (horizontalValue != grid[outerloop, innerloop])
+
+                    {
+                        rowWin = false;
+                        break;
+                    }
+
+                }
+
+                if (!rowWin)
+
+                {
+                    break;
+                }
+
+            }
+
+
             if (choice == ALL_HORIZONTALS)
             {
-                if (holizontalLineWin == WIN)
+                if (rowWin)
 
                 {
                     Console.WriteLine($"Conglatulation you won");
@@ -135,29 +162,30 @@ class Program
 
             }
 
-            //checking if the Vertical are all the same
-            int verticalLineWin = 0;
 
-            for (outerloop = FIRST_GRID_VALUE; outerloop < firstGridElement; outerloop++)
+
+            //checking if the Vertical are all the same
+
+            bool verticalWin = true;
+            for (outerloop = FIRST_GRID_VALUE; outerloop < gridRowLength; outerloop++)
             {
-                int verticalMatch = 0;
                 int verticalValue = grid[FIRST_GRID_VALUE, outerloop];
 
-                for (int innerloop = SECOND_GRID_VALUE; innerloop < gridColumnLenghth; innerloop++)
+                for (int innerloop = SECOND_GRID_VALUE; innerloop < gridColumnLength; innerloop++)
                 {
-                    if (verticalValue == grid[innerloop, outerloop])
+                    if (verticalValue != grid[innerloop, outerloop])
 
                     {
-                        verticalMatch++;
+                        verticalWin = false;
+                        break;
                     }
 
                 }
 
-                if (verticalMatch == WIN)
+                if (!verticalWin)
 
                 {
-                    isWin = true;
-                    verticalLineWin++;
+                    break;
                 }
 
             }
@@ -165,7 +193,7 @@ class Program
 
             if (choice == ALL_VERTICALS)
             {
-                if (verticalLineWin == WIN)
+                if (verticalWin)
                 {
                     Console.WriteLine($"Conglatulation you won");
                     //adding wager amount to the total money
@@ -182,7 +210,7 @@ class Program
 
             if (choice == EVERYTHING_ON_THE_GRID)
             {
-                if (verticalLineWin == WIN && holizontalLineWin == WIN)
+                if (rowWin && verticalWin)
                 {
                     Console.WriteLine($"Conglatulation you won");
                     //adding wager amount to the total money
@@ -199,38 +227,34 @@ class Program
 
             //checking if the diagnal are all the same
             int diagnolValues = grid[FIRST_GRID_VALUE, FIRST_GRID_VALUE];
-            int secondDiagnalMatch = 0;
-            int diagnolaMatch = 0;
-            int actualGridRowLenght = firstGridElement - 1;
-            int secondDiagnalValues = grid[FIRST_GRID_VALUE, firstGridElement - GRID_START];
-            for (outerloop = FIRST_GRID_VALUE; outerloop < firstGridElement; outerloop++)
+            bool secondDiagnalMatch = true;
+            bool diagnalMatch = true;
+            int actualGridRowLenght = gridRowLength - GRID_START;
+            int secondDiagnalValues = grid[FIRST_GRID_VALUE, gridRowLength - GRID_START];
+            for (outerloop = FIRST_GRID_VALUE; outerloop < gridRowLength; outerloop++)
             {
-                for (int innerloop = SECOND_GRID_VALUE; innerloop < gridColumnLenghth; innerloop++)
+                for (int innerloop = FIRST_GRID_VALUE; innerloop < gridColumnLength; innerloop++)
                 {
-                    if (diagnolValues == grid[innerloop, innerloop])
+                    if (diagnolValues != grid[innerloop, innerloop])
                     {
-                        diagnolaMatch++;
-                    }
-                    if (diagnolaMatch == WIN)
-                    {
-                        isWin = true;
+                        diagnalMatch = false;
+                        break;
                     }
 
-                    if (secondDiagnalValues == grid[outerloop, actualGridRowLenght - outerloop])
+
+                    if (secondDiagnalValues != grid[outerloop, actualGridRowLenght - outerloop])
                     {
-                        secondDiagnalMatch++;
+                        secondDiagnalMatch = false;
+                        break;
                     }
-                    if (secondDiagnalMatch == WIN)
-                    {
-                        isWin = true;
-                    }
+
 
                 }
 
             }
             if (choice == BOTH_DIAGNALS)
             {
-                if (diagnolaMatch == WIN && secondDiagnalMatch == WIN)
+                if (diagnalMatch && secondDiagnalMatch)
                 {
                     Console.WriteLine($"Conglatulation you won");
                     //adding wager amount to the total money
