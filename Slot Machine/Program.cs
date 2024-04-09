@@ -78,10 +78,11 @@ class Program
             int gridRowLength = grid.GetLength(0);
             int gridColumnLength = grid.GetLength(1);
             bool isWin = false;
-            int holizontalLineWin = 0;
+            int winningLine = SECOND_GRID_VALUE;
             for (outerloop = FIRST_GRID_VALUE; outerloop < gridRowLength; outerloop++)
             {
                 int holizontalMatch = 0;
+                
                 int horizontalValue = grid[outerloop, FIRST_GRID_VALUE];
 
                 for (int innerloop = FIRST_GRID_VALUE; innerloop < gridColumnLength; innerloop++)
@@ -94,7 +95,7 @@ class Program
 
                 }
 
-                if (holizontalMatch == gridRowLength)
+                if (holizontalMatch == gridRowLength && outerloop==winningLine)
 
                 {
                     isWin = true;
@@ -104,7 +105,7 @@ class Program
 
             if (choice == MIDDLE_LINE)
             {
-                if (outerloop == MIDDLE_LINE && isWin)
+                if (isWin)
                 {
                     Console.WriteLine($"Conglatulation you won");
                     //adding wager amount to the total money
