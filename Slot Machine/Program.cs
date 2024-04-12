@@ -17,15 +17,14 @@ class Program
         const int GRID_START = 1;
         const int GRID_END = 4;
         const int FIRST_GRID_VALUE = 0;
-        const int SECOND_GRID_VALUE = 1;
         const int MIDDLE_LINE = 1;
         const int ALL_HORIZONTALS = 2;
         const int ALL_VERTICALS = 3;
         const int BOTH_DIAGNALS = 4;
         const int EVERYTHING_ON_THE_GRID = 5;
 
-
-
+        int choice = 0;
+        int wager = 0;
 
         Console.WriteLine("Hello, Welcome let us play the game Slot Machine!");
         Console.WriteLine("You will be rewarded the same amount of the money that you will wage");
@@ -39,17 +38,60 @@ class Program
         // creating an infinite loop to only to be stoped after the user types exit
         while (true)
         {
-            //giving the user an option to choose what to play
-            Console.WriteLine("Choose where do you want to play");
-            Console.WriteLine($"Press {MIDDLE_LINE}  for the middle line, {ALL_HORIZONTALS} for all horizontals,  {ALL_VERTICALS} for all verticals,  {BOTH_DIAGNALS} for both diagnals,  and  {EVERYTHING_ON_THE_GRID} for everything in the grid");
-            int choice = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine($"\nYou have {money} as the amount of money, how much would you like to wager? type amount and press enter");
-            int wager = Convert.ToInt32(Console.ReadLine());
-            if (wager > money)
+            
+
+            while (true)
             {
-                Console.WriteLine("You dont have enough money to wager");
-                continue;
+                //giving the user an option to choose what to play
+
+                Console.WriteLine("Choose where do you want to play");
+                Console.WriteLine($"Press {MIDDLE_LINE}  for the middle line, {ALL_HORIZONTALS} for all horizontals,  {ALL_VERTICALS} for all verticals,  {BOTH_DIAGNALS} for both diagnals,  and  {EVERYTHING_ON_THE_GRID} for everything in the grid");
+
+                choice = Convert.ToInt32(Console.ReadLine());
+
+
+                if (choice >= MIDDLE_LINE && choice <= EVERYTHING_ON_THE_GRID)
+
+                {
+                
+                    break;
+                }
+
+                else
+                {
+                    Console.WriteLine("Please enter a valid number");
+                    continue;
+                }
+
             }
+
+            Console.WriteLine($"\nYou have {money} as the amount of money, how much would you like to wager? type amount and press enter");
+
+            
+            while (true)
+            {
+                wager = Convert.ToInt32(Console.ReadLine());
+
+                if (wager > NO_MONEY_LEFT && wager <= money)
+                {
+                    
+                    break;
+                }
+
+                if (wager > money)
+                {
+                    Console.WriteLine("You dont have enough money to wager");
+                    continue;
+                }
+                else
+                {
+                    Console.WriteLine("enter a valid amount of money to wager");
+                    continue;
+                }
+            }
+
+
+
             //deducting money from the wager
             money -= wager; //(I could also use money-=wager)
 
@@ -74,37 +116,40 @@ class Program
                 }
                 Console.WriteLine();
             }
+
             //checking if the middle line values are all the same
             int gridRowLength = grid.GetLength(0);
             int gridColumnLength = grid.GetLength(1);
             bool isWin = false;
-            int winningLine = SECOND_GRID_VALUE;
-            for (outerloop = FIRST_GRID_VALUE; outerloop < gridRowLength; outerloop++)
+            int winningLine = MIDDLE_LINE;
+            if (choice == MIDDLE_LINE)
             {
-                int holizontalMatch = 0;
-                
-                int horizontalValue = grid[outerloop, FIRST_GRID_VALUE];
-
-                for (int innerloop = FIRST_GRID_VALUE; innerloop < gridColumnLength; innerloop++)
+                for (outerloop = FIRST_GRID_VALUE; outerloop < gridRowLength; outerloop++)
                 {
-                    if (horizontalValue == grid[outerloop, innerloop])
+                    int holizontalMatch = 0;
+
+                    int horizontalValue = grid[outerloop, FIRST_GRID_VALUE];
+
+                    for (int innerloop = FIRST_GRID_VALUE; innerloop < gridColumnLength; innerloop++)
+                    {
+                        if (horizontalValue == grid[outerloop, innerloop])
+
+                        {
+                            holizontalMatch++;
+                        }
+
+                    }
+
+                    if (holizontalMatch == gridRowLength && outerloop == winningLine)
 
                     {
-                        holizontalMatch++;
+                        isWin = true;
                     }
 
                 }
 
-                if (holizontalMatch == gridRowLength && outerloop==winningLine)
 
-                {
-                    isWin = true;
-                }
 
-            }
-
-            if (choice == MIDDLE_LINE)
-            {
                 if (isWin)
                 {
                     Console.WriteLine($"Conglatulation you won");
@@ -115,39 +160,38 @@ class Program
                 {
                     Console.WriteLine("Sorry you did not win");
                 }
+
             }
-
-
 
             //checking if the  horinzontal are all the same
             bool rowWin = true;
-
-            for (outerloop = FIRST_GRID_VALUE; outerloop < gridRowLength; outerloop++)
+            if (choice == ALL_HORIZONTALS)
             {
-                int horizontalValue = grid[outerloop, FIRST_GRID_VALUE];
-
-                for (int innerloop = FIRST_GRID_VALUE; innerloop < gridColumnLength; innerloop++)
+                for (outerloop = FIRST_GRID_VALUE; outerloop < gridRowLength; outerloop++)
                 {
-                    if (horizontalValue != grid[outerloop, innerloop])
+                    int horizontalValue = grid[outerloop, FIRST_GRID_VALUE];
+
+                    for (int innerloop = FIRST_GRID_VALUE; innerloop < gridColumnLength; innerloop++)
+                    {
+                        if (horizontalValue != grid[outerloop, innerloop])
+
+                        {
+                            rowWin = false;
+                            break;
+                        }
+
+                    }
+
+                    if (!rowWin)
 
                     {
-                        rowWin = false;
                         break;
                     }
 
                 }
 
-                if (!rowWin)
-
-                {
-                    break;
-                }
-
-            }
 
 
-            if (choice == ALL_HORIZONTALS)
-            {
                 if (rowWin)
 
                 {
@@ -161,57 +205,42 @@ class Program
                     Console.WriteLine("Sorry you did not win");
                 }
 
+
             }
-
-
 
             //checking if the Vertical are all the same
 
             bool verticalWin = true;
-            for (outerloop = FIRST_GRID_VALUE; outerloop < gridRowLength; outerloop++)
-            {
-                int verticalValue = grid[FIRST_GRID_VALUE, outerloop];
 
-                for (int innerloop = SECOND_GRID_VALUE; innerloop < gridColumnLength; innerloop++)
+            if (choice == ALL_VERTICALS)
+            {
+                for (outerloop = FIRST_GRID_VALUE; outerloop < gridRowLength; outerloop++)
                 {
-                    if (verticalValue != grid[innerloop, outerloop])
+                    int verticalValue = grid[FIRST_GRID_VALUE, outerloop];
+
+                    for (int innerloop = FIRST_GRID_VALUE; innerloop < gridColumnLength; innerloop++)
+                    {
+                        if (verticalValue != grid[innerloop, outerloop])
+
+                        {
+                            verticalWin = false;
+                            break;
+                        }
+
+                    }
+
+                    if (!verticalWin)
 
                     {
-                        verticalWin = false;
                         break;
                     }
 
                 }
 
-                if (!verticalWin)
-
-                {
-                    break;
-                }
-
-            }
 
 
-            if (choice == ALL_VERTICALS)
-            {
                 if (verticalWin)
-                {
-                    Console.WriteLine($"Conglatulation you won");
-                    //adding wager amount to the total money
-                    money = money + wager;
-                }
 
-                else
-                {
-                    Console.WriteLine("Sorry you did not win");
-                }
-            }
-
-
-
-            if (choice == EVERYTHING_ON_THE_GRID)
-            {
-                if (rowWin && verticalWin)
                 {
                     Console.WriteLine($"Conglatulation you won");
                     //adding wager amount to the total money
@@ -223,7 +252,9 @@ class Program
                     Console.WriteLine("Sorry you did not win");
                 }
 
+
             }
+
 
 
             //checking if the diagnal are all the same
@@ -232,29 +263,32 @@ class Program
             bool diagnalMatch = true;
             int actualGridRowLenght = gridRowLength - GRID_START;
             int secondDiagnalValues = grid[FIRST_GRID_VALUE, gridRowLength - GRID_START];
-            for (outerloop = FIRST_GRID_VALUE; outerloop < gridRowLength; outerloop++)
+            if (choice == BOTH_DIAGNALS)
+
             {
-                for (int innerloop = FIRST_GRID_VALUE; innerloop < gridColumnLength; innerloop++)
+                for (outerloop = FIRST_GRID_VALUE; outerloop < gridRowLength; outerloop++)
                 {
-                    if (diagnolValues != grid[innerloop, innerloop])
+                    for (int innerloop = FIRST_GRID_VALUE; innerloop < gridColumnLength; innerloop++)
                     {
-                        diagnalMatch = false;
-                        break;
+                        if (diagnolValues != grid[innerloop, innerloop])
+                        {
+                            diagnalMatch = false;
+                            break;
+                        }
+
+
+                        if (secondDiagnalValues != grid[outerloop, actualGridRowLenght - outerloop])
+                        {
+                            secondDiagnalMatch = false;
+                            break;
+                        }
+
+
                     }
-
-
-                    if (secondDiagnalValues != grid[outerloop, actualGridRowLenght - outerloop])
-                    {
-                        secondDiagnalMatch = false;
-                        break;
-                    }
-
 
                 }
 
-            }
-            if (choice == BOTH_DIAGNALS)
-            {
+
                 if (diagnalMatch && secondDiagnalMatch)
                 {
                     Console.WriteLine($"Conglatulation you won");
@@ -265,9 +299,61 @@ class Program
                 {
                     Console.WriteLine("Sorry you did not win");
                 }
+
             }
 
 
+
+
+            bool horizontalWinInEverything = true;
+            bool verticalWinInEverything = true;
+            if (choice == EVERYTHING_ON_THE_GRID)
+            {
+                for (outerloop = FIRST_GRID_VALUE; outerloop < gridRowLength; outerloop++)
+                {
+                    int horizontalValue = grid[outerloop, FIRST_GRID_VALUE];
+                    int verticalValue = grid[FIRST_GRID_VALUE, outerloop];
+
+                    for (int innerloop = FIRST_GRID_VALUE; innerloop < gridColumnLength; innerloop++)
+                    {
+                        if (verticalValue != grid[innerloop, outerloop])
+
+                        {
+                            verticalWinInEverything = false;
+                            break;
+                        }
+
+                        if (horizontalValue != grid[outerloop, innerloop])
+                        {
+                            horizontalWinInEverything = false;
+                            break;
+                        }
+
+                    }
+
+                    if (!verticalWinInEverything || !horizontalWinInEverything)
+
+                    {
+                        break;
+                    }
+
+                }
+
+
+                if (verticalWinInEverything && horizontalWinInEverything)
+
+                {
+                    Console.WriteLine($"Conglatulation you won");
+                    //adding wager amount to the total money
+                    money = money + wager;
+                }
+
+                else
+                {
+                    Console.WriteLine("Sorry you did not win");
+                }
+
+            }
 
 
             //informing the total amount of money
