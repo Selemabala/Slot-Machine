@@ -23,23 +23,22 @@ class Program
         const int BOTH_DIAGNALS = 4;
         const int EVERYTHING_ON_THE_GRID = 5;
 
-        int choice = 0;
-        int wager = 0;
-
         Console.WriteLine("Hello, Welcome let us play the game Slot Machine!");
         Console.WriteLine("You will be rewarded the same amount of the money that you will wage");
         Console.WriteLine("The game will automatically end once you are left with no money");
         //The starting money
-        int money = 10;
 
         Random random = new Random();
         // 3 x 3 grid for the slot machine
         int[,] grid = new int[GRID_COLUMNS, GRID_ROWS];
+
+        int choice;
+        int wager;
+        int money = 10;
+
         // creating an infinite loop to only to be stoped after the user types exit
         while (true)
         {
-            
-
             while (true)
             {
                 //giving the user an option to choose what to play
@@ -47,13 +46,13 @@ class Program
                 Console.WriteLine("Choose where do you want to play");
                 Console.WriteLine($"Press {MIDDLE_LINE}  for the middle line, {ALL_HORIZONTALS} for all horizontals,  {ALL_VERTICALS} for all verticals,  {BOTH_DIAGNALS} for both diagnals,  and  {EVERYTHING_ON_THE_GRID} for everything in the grid");
 
-                choice = Convert.ToInt32(Console.ReadLine());
+                string userInPut = Console.ReadLine();
 
-
-                if (choice >= MIDDLE_LINE && choice <= EVERYTHING_ON_THE_GRID)
+                bool success = int.TryParse(userInPut, out choice);
+                if (success && choice >= MIDDLE_LINE && choice <= EVERYTHING_ON_THE_GRID)
 
                 {
-                
+
                     break;
                 }
 
@@ -62,19 +61,19 @@ class Program
                     Console.WriteLine("Please enter a valid number");
                     continue;
                 }
-
             }
 
             Console.WriteLine($"\nYou have {money} as the amount of money, how much would you like to wager? type amount and press enter");
 
-            
+
             while (true)
             {
-                wager = Convert.ToInt32(Console.ReadLine());
+                string moneyFromUser = Console.ReadLine();
 
-                if (wager > NO_MONEY_LEFT && wager <= money)
+                bool correctAmount = int.TryParse(moneyFromUser, out wager);
+                if (correctAmount && wager > NO_MONEY_LEFT && wager <= money)
                 {
-                    
+
                     break;
                 }
 
@@ -89,8 +88,6 @@ class Program
                     continue;
                 }
             }
-
-
 
             //deducting money from the wager
             money -= wager; //(I could also use money-=wager)
@@ -137,7 +134,6 @@ class Program
                         {
                             holizontalMatch++;
                         }
-
                     }
 
                     if (holizontalMatch == gridRowLength && outerloop == winningLine)
@@ -145,10 +141,7 @@ class Program
                     {
                         isWin = true;
                     }
-
                 }
-
-
 
                 if (isWin)
                 {
@@ -187,10 +180,7 @@ class Program
                     {
                         break;
                     }
-
                 }
-
-
 
                 if (rowWin)
 
@@ -204,8 +194,6 @@ class Program
                 {
                     Console.WriteLine("Sorry you did not win");
                 }
-
-
             }
 
             //checking if the Vertical are all the same
@@ -226,7 +214,6 @@ class Program
                             verticalWin = false;
                             break;
                         }
-
                     }
 
                     if (!verticalWin)
@@ -234,10 +221,7 @@ class Program
                     {
                         break;
                     }
-
                 }
-
-
 
                 if (verticalWin)
 
@@ -252,10 +236,7 @@ class Program
                     Console.WriteLine("Sorry you did not win");
                 }
 
-
             }
-
-
 
             //checking if the diagnal are all the same
             int diagnolValues = grid[FIRST_GRID_VALUE, FIRST_GRID_VALUE];
@@ -264,7 +245,6 @@ class Program
             int actualGridRowLenght = gridRowLength - GRID_START;
             int secondDiagnalValues = grid[FIRST_GRID_VALUE, gridRowLength - GRID_START];
             if (choice == BOTH_DIAGNALS)
-
             {
                 for (outerloop = FIRST_GRID_VALUE; outerloop < gridRowLength; outerloop++)
                 {
@@ -275,19 +255,13 @@ class Program
                             diagnalMatch = false;
                             break;
                         }
-
-
                         if (secondDiagnalValues != grid[outerloop, actualGridRowLenght - outerloop])
                         {
                             secondDiagnalMatch = false;
                             break;
                         }
-
-
                     }
-
                 }
-
 
                 if (diagnalMatch && secondDiagnalMatch)
                 {
@@ -299,11 +273,7 @@ class Program
                 {
                     Console.WriteLine("Sorry you did not win");
                 }
-
             }
-
-
-
 
             bool horizontalWinInEverything = true;
             bool verticalWinInEverything = true;
@@ -317,7 +287,6 @@ class Program
                     for (int innerloop = FIRST_GRID_VALUE; innerloop < gridColumnLength; innerloop++)
                     {
                         if (verticalValue != grid[innerloop, outerloop])
-
                         {
                             verticalWinInEverything = false;
                             break;
@@ -328,7 +297,6 @@ class Program
                             horizontalWinInEverything = false;
                             break;
                         }
-
                     }
 
                     if (!verticalWinInEverything || !horizontalWinInEverything)
@@ -336,9 +304,7 @@ class Program
                     {
                         break;
                     }
-
                 }
-
 
                 if (verticalWinInEverything && horizontalWinInEverything)
 
@@ -354,7 +320,6 @@ class Program
                 }
 
             }
-
 
             //informing the total amount of money
             Console.WriteLine($"Currently, your total money is {money}");
