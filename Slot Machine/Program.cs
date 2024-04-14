@@ -22,6 +22,7 @@ class Program
         const int ALL_VERTICALS = 3;
         const int BOTH_DIAGNALS = 4;
         const int EVERYTHING_ON_THE_GRID = 5;
+        const int INITIAL_MONEY = 10;
 
         Console.WriteLine("Hello, Welcome let us play the game Slot Machine!");
         Console.WriteLine("You will be rewarded the same amount of the money that you will wage");
@@ -34,7 +35,7 @@ class Program
 
         int choice;
         int wager;
-        int money = 10;
+        int money = INITIAL_MONEY;
 
         // creating an infinite loop to only to be stoped after the user types exit
         while (true)
