@@ -106,7 +106,6 @@ class Program
             int gridRowLength = grid.GetLength(0);
             int gridColumnLength = grid.GetLength(1);
             bool isWin = false;
-            int winningLine = MIDDLE_LINE;
             if (choice == MIDDLE_LINE)
             {
                 for (outerloop = FIRST_GRID_VALUE; outerloop < gridRowLength; outerloop++)
@@ -118,13 +117,12 @@ class Program
                     for (int innerloop = FIRST_GRID_VALUE; innerloop < gridColumnLength; innerloop++)
                     {
                         if (horizontalValue == grid[outerloop, innerloop])
-
                         {
                             holizontalMatch++;
                         }
                     }
 
-                    if (holizontalMatch == gridRowLength && outerloop == winningLine)
+                    if (holizontalMatch == gridRowLength && outerloop == MIDDLE_LINE)
 
                     {
                         isWin = true;
