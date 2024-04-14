@@ -53,20 +53,13 @@ class Program
                 if (success && choice >= MIDDLE_LINE && choice <= EVERYTHING_ON_THE_GRID)
 
                 {
-
                     break;
                 }
 
-                else
-                {
-                    Console.WriteLine("Please enter a valid number");
-                    continue;
-                }
+                Console.WriteLine("Please enter a valid number");
             }
 
             Console.WriteLine($"\nYou have {money} as the amount of money, how much would you like to wager? type amount and press enter");
-
-
             while (true)
             {
                 string moneyFromUser = Console.ReadLine();
