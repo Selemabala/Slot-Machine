@@ -10,10 +10,7 @@ class Program
     {
         const string CONTINUE_PLAY = "yes";
         const int NO_MONEY_LEFT = 0;
-        const int GRID_ROWS = 3;
-        const int GRID_COLUMNS = 3;
-        const int LOOP_START = 0;
-        const int LOOP_END = 3;
+        const int GRID_SIZE = 3;
         const int GRID_START = 1;
         const int GRID_END = 4;
         const int FIRST_GRID_VALUE = 0;
@@ -31,7 +28,7 @@ class Program
 
         Random random = new Random();
         // 3 x 3 grid for the slot machine
-        int[,] grid = new int[GRID_COLUMNS, GRID_ROWS];
+        int[,] grid = new int[GRID_SIZE, GRID_SIZE];
 
         int choice;
         int wager;
@@ -85,9 +82,9 @@ class Program
 
             //filling the grid with random numbers
             int outerloop = 0;
-            for (outerloop = LOOP_START; outerloop < LOOP_END; outerloop++)
+            for (outerloop = FIRST_GRID_VALUE; outerloop < GRID_SIZE; outerloop++)
             {
-                for (int insideloop = LOOP_START; insideloop < LOOP_END; insideloop++)
+                for (int insideloop = FIRST_GRID_VALUE; insideloop < GRID_SIZE; insideloop++)
                 {
                     //getting random numbers between 1,4
                     grid[outerloop, insideloop] = random.Next(GRID_START, GRID_END);
@@ -96,9 +93,9 @@ class Program
             //Outputting the grid
             Console.WriteLine("Slot Machine Grid");
 
-            for (outerloop = LOOP_START; outerloop < LOOP_END; outerloop++)
+            for (outerloop = FIRST_GRID_VALUE; outerloop < GRID_SIZE; outerloop++)
             {
-                for (int inside = LOOP_START; inside < LOOP_END; inside++)
+                for (int inside = FIRST_GRID_VALUE; inside < GRID_SIZE; inside++)
                 {
                     Console.Write(grid[outerloop, inside] + " ");
                 }
