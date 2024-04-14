@@ -76,11 +76,8 @@ class Program
                     Console.WriteLine("You dont have enough money to wager");
                     continue;
                 }
-                else
-                {
-                    Console.WriteLine("enter a valid amount of money to wager");
-                    continue;
-                }
+   
+                    Console.WriteLine("enter a valid amount of money to wager");            
             }
 
             //deducting money from the wager
