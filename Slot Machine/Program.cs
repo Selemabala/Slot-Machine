@@ -13,7 +13,6 @@ class Program
         const int GRID_SIZE = 3;
         const int GRID_START = 1;
         const int GRID_END = 4;
-        const int FIRST_GRID_VALUE = 0;
         const int MIDDLE_LINE = 1;
         const int ALL_HORIZONTALS = 2;
         const int ALL_VERTICALS = 3;
@@ -81,10 +80,10 @@ class Program
             money -= wager; //(I could also use money-=wager)
 
             //filling the grid with random numbers
-            int outerloop = 0;
-            for (outerloop = FIRST_GRID_VALUE; outerloop < GRID_SIZE; outerloop++)
+            int outerloop;
+            for (outerloop = 0; outerloop < GRID_SIZE; outerloop++)
             {
-                for (int insideloop = FIRST_GRID_VALUE; insideloop < GRID_SIZE; insideloop++)
+                for (int insideloop = 0; insideloop < GRID_SIZE; insideloop++)
                 {
                     //getting random numbers between 1,4
                     grid[outerloop, insideloop] = random.Next(GRID_START, GRID_END);
@@ -93,9 +92,9 @@ class Program
             //Outputting the grid
             Console.WriteLine("Slot Machine Grid");
 
-            for (outerloop = FIRST_GRID_VALUE; outerloop < GRID_SIZE; outerloop++)
+            for (outerloop = 0; outerloop < GRID_SIZE; outerloop++)
             {
-                for (int inside = FIRST_GRID_VALUE; inside < GRID_SIZE; inside++)
+                for (int inside = 0; inside < GRID_SIZE; inside++)
                 {
                     Console.Write(grid[outerloop, inside] + " ");
                 }
@@ -108,13 +107,13 @@ class Program
             bool isWin = false;
             if (choice == MIDDLE_LINE)
             {
-                for (outerloop = FIRST_GRID_VALUE; outerloop < gridRowLength; outerloop++)
+                for (outerloop = 0; outerloop < gridRowLength; outerloop++)
                 {
                     int holizontalMatch = 0;
 
-                    int horizontalValue = grid[outerloop, FIRST_GRID_VALUE];
+                    int horizontalValue = grid[outerloop, 0];
 
-                    for (int innerloop = FIRST_GRID_VALUE; innerloop < gridColumnLength; innerloop++)
+                    for (int innerloop = 0; innerloop < gridColumnLength; innerloop++)
                     {
                         if (horizontalValue == grid[outerloop, innerloop])
                         {
@@ -146,11 +145,11 @@ class Program
             bool rowWin = true;
             if (choice == ALL_HORIZONTALS)
             {
-                for (outerloop = FIRST_GRID_VALUE; outerloop < gridRowLength; outerloop++)
+                for (outerloop = 0; outerloop < gridRowLength; outerloop++)
                 {
-                    int horizontalValue = grid[outerloop, FIRST_GRID_VALUE];
+                    int horizontalValue = grid[outerloop, 0];
 
-                    for (int innerloop = FIRST_GRID_VALUE; innerloop < gridColumnLength; innerloop++)
+                    for (int innerloop = 0; innerloop < gridColumnLength; innerloop++)
                     {
                         if (horizontalValue != grid[outerloop, innerloop])
 
@@ -188,11 +187,11 @@ class Program
 
             if (choice == ALL_VERTICALS)
             {
-                for (outerloop = FIRST_GRID_VALUE; outerloop < gridRowLength; outerloop++)
+                for (outerloop = 0; outerloop < gridRowLength; outerloop++)
                 {
-                    int verticalValue = grid[FIRST_GRID_VALUE, outerloop];
+                    int verticalValue = grid[0, outerloop];
 
-                    for (int innerloop = FIRST_GRID_VALUE; innerloop < gridColumnLength; innerloop++)
+                    for (int innerloop = 0; innerloop < gridColumnLength; innerloop++)
                     {
                         if (verticalValue != grid[innerloop, outerloop])
 
@@ -225,16 +224,16 @@ class Program
             }
 
             //checking if the diagnal are all the same
-            int diagnolValues = grid[FIRST_GRID_VALUE, FIRST_GRID_VALUE];
+            int diagnolValues = grid[0, 0];
             bool secondDiagnalMatch = true;
             bool diagnalMatch = true;
             int actualGridRowLenght = gridRowLength - GRID_START;
-            int secondDiagnalValues = grid[FIRST_GRID_VALUE, gridRowLength - GRID_START];
+            int secondDiagnalValues = grid[0, gridRowLength - GRID_START];
             if (choice == BOTH_DIAGNALS)
             {
-                for (outerloop = FIRST_GRID_VALUE; outerloop < gridRowLength; outerloop++)
+                for (outerloop = 0; outerloop < gridRowLength; outerloop++)
                 {
-                    for (int innerloop = FIRST_GRID_VALUE; innerloop < gridColumnLength; innerloop++)
+                    for (int innerloop = 0; innerloop < gridColumnLength; innerloop++)
                     {
                         if (diagnolValues != grid[innerloop, innerloop])
                         {
@@ -265,12 +264,12 @@ class Program
             bool verticalWinInEverything = true;
             if (choice == EVERYTHING_ON_THE_GRID)
             {
-                for (outerloop = FIRST_GRID_VALUE; outerloop < gridRowLength; outerloop++)
+                for (outerloop = 0; outerloop < gridRowLength; outerloop++)
                 {
-                    int horizontalValue = grid[outerloop, FIRST_GRID_VALUE];
-                    int verticalValue = grid[FIRST_GRID_VALUE, outerloop];
+                    int horizontalValue = grid[outerloop, 0];
+                    int verticalValue = grid[0, outerloop];
 
-                    for (int innerloop = FIRST_GRID_VALUE; innerloop < gridColumnLength; innerloop++)
+                    for (int innerloop = 0; innerloop < gridColumnLength; innerloop++)
                     {
                         if (verticalValue != grid[innerloop, outerloop])
                         {
